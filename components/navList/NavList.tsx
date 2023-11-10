@@ -8,22 +8,22 @@ const NavList = () => {
       <Link className={css.nav_item} href="/">
         Home
       </Link>
-      <Link className={css.nav_item} href="/userRegistration">
+      <Link className={css.nav_item} href="/registration">
         User registration
       </Link>
-      <Link className={css.nav_item} href="/userAuthorization">
+      <Link className={css.nav_item} href="/authorization">
         User authorization
       </Link>
-      <Link className={css.nav_item} href="/listOfUsers">
+      <Link className={css.nav_item} href="/users">
         List of users
       </Link>
-      <Link className={css.nav_item} href="/userProfile">
+      <Link className={css.nav_item} href="/profile">
         User Profile
       </Link>
-      <Link className={css.nav_item} href="/listOfCompanies">
+      <Link className={css.nav_item} href="/companies">
         List of companies
       </Link>
-      <Link className={css.nav_item} href="/companyProfile">
+      <Link className={css.nav_item} href="/company">
         Company Profile
       </Link>
     </div>
