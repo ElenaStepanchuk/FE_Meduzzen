@@ -1,0 +1,30 @@
+.button {
+  display: block;
+  min-height: 30px;
+  cursor: pointer;
+
+  position: absolute;
+  /* margin-top: 50px; */
+  padding: 5px;
+  outline: none;
+  background: linear-gradient(
+    90deg,
+    rgb(26, 89, 248) 0%,
+    rgb(126, 163, 255) 50%,
+    rgb(26, 89, 248) 100%
+  );
+  border: none;
+  justify-content: center;
+
+  color: #000000;
+}
+.button:hover {
+  transition: 0.3s;
+  background: linear-gradient(
+    90deg,
+    rgb(126, 163, 255) 0%,
+    rgb(26, 89, 248) 50%,
+    rgb(126, 163, 255) 100%
+  );
+  color: white;
+}

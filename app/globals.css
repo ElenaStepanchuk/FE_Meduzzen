@@ -15,7 +15,13 @@ body {
   max-width: 100vw;
   overflow-x: hidden;
 
-  background: orange;
+  /* background: orange; */
+  background: linear-gradient(
+    90deg,
+    orange 0%,
+    rgb(255, 188, 62) 50%,
+    orange 100%
+  );
 }
 
 li {

@@ -1,3 +1,8 @@
 .container {
-  background: rgb(222, 208, 235);
+  background: linear-gradient(
+    90deg,
+    rgb(26, 89, 248) 0%,
+    rgb(126, 163, 255) 50%,
+    rgb(26, 89, 248) 100%
+  );
 }
