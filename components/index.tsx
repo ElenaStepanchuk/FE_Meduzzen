@@ -2,3 +2,7 @@ export { default as Navigation } from "../components/navigation/Navigation";
 export { default as NavList } from "../components/navList/NavList";
 export { default as Footer } from "../components/footer/Footer";
 export { default as Header } from "../components/header/Header";
+export { default as ModalWindow } from "../components/modalWindow/ModalWindow";
+export { default as Button } from "../components/button/Button";
+export { default as Form } from "../components/form/Form";
+export { default as FormInput } from "../components/formInput/FormInput";

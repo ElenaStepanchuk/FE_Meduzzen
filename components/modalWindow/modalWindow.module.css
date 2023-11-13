@@ -1,0 +1,26 @@
+.wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100vw;
+  height: 100vh;
+  background: rgb(26, 89, 248, 0.5);
+  z-index: 104;
+}
+.container {
+  display: flex;
+  position: relative;
+  margin: 15% auto;
+  border: 2px solid rgb(26, 89, 248);
+  border-radius: 10px;
+  background: linear-gradient(
+    90deg,
+    rgb(26, 89, 248) 0%,
+    rgb(126, 163, 255) 50%,
+    rgb(26, 89, 248) 100%
+  );
+
+  padding: 10px;
+  z-index: 105;
+}
