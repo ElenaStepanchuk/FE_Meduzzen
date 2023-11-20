@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Button, ModalWindow } from "@/components";
 import css from "./page.module.css";
 import { addText } from "@/redux/testString/testStringSlice";
+import type { RootState, AppDispatch } from "@/store/store";
 
 import { useDispatch, useSelector } from "react-redux/es/exports";
 
@@ -12,10 +13,14 @@ const About: React.FC = () => {
     setIsModalOpen((isOpen) => !isOpen);
   };
 
-  const dispatch = useDispatch();
-  const valueText = useSelector((state: any) => state.testString);
-  const handleInputChange = (event: any) => {
-    dispatch(addText(event.target.value));
+  const dispatch: AppDispatch = useDispatch();
+
+  const valueText: string = useSelector(
+    (state: RootState) => state.testString.value
+  );
+
+  const handleInputChange = (event: React.FormEvent<HTMLInputElement>) => {
+    dispatch(addText((event.target as HTMLInputElement).value));
   };
 
   const submitForm = () => {};
@@ -26,7 +31,7 @@ const About: React.FC = () => {
         <form onSubmit={submitForm}>
           <input name={"text"} onChange={handleInputChange} type={"text"} />
         </form>
-        <h2 className={css.text}>{valueText.value}</h2>
+        <h2 className={css.text}>{valueText}</h2>
         <p className={css.text}>
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry`s standard dummy text ever
