@@ -2,14 +2,9 @@
 import css from "./form.module.css";
 import React from "react";
 
-interface IProps {
-  formMargin: string;
-  formWidth: string;
-  children?: React.ReactNode;
-  submitForm: React.FormEventHandler<HTMLFormElement> | undefined;
-}
+import { IForm } from "@/types/form";
 
-const Form: React.FC<IProps> = ({
+const Form: React.FC<IForm> = ({
   formMargin,
   children,
   submitForm,

@@ -3,15 +3,9 @@ import React from "react";
 import css from "./modalWindow.module.css";
 
 import { Button } from "..";
+import { IModalWindow } from "@/types/modalWindow";
 
-interface IProps {
-  closeModal: (e: React.MouseEvent) => void;
-  modalWidth?: string;
-  textAlign?: "start" | "end" | "left" | "right" | "center";
-  children?: React.ReactNode;
-}
-
-const ModalWindow: React.FC<IProps> = ({
+const ModalWindow: React.FC<IModalWindow> = ({
   closeModal,
   modalWidth,
   textAlign,
