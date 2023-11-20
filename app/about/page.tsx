@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Button, ModalWindow, Form, FormInput } from "@/components";
+import { Button, ModalWindow } from "@/components";
 import css from "./page.module.css";
 import { addText } from "@/redux/testString/testStringSlice";
 
@@ -14,8 +14,6 @@ const About: React.FC = () => {
 
   const dispatch = useDispatch();
   const valueText = useSelector((state: any) => state.testString);
-  console.log(valueText.value);
-
   const handleInputChange = (event: any) => {
     dispatch(addText(event.target.value));
   };
