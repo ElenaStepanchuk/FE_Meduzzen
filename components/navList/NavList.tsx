@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import css from "./navList.module.css";
 
 const NavList = () => {
-  const pathname = usePathname();
+  const pathname: string = usePathname();
 
   return (
     <div className={css.nav_container}>
