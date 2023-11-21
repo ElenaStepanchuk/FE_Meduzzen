@@ -1,18 +1,10 @@
 "use client";
-import { type } from "os";
 import css from "./formInput.module.css";
 import React from "react";
 
-interface IProps {
-  handleInputChange?: React.ChangeEventHandler<HTMLInputElement>;
-  value: string;
-  label: string | number;
-  name: string;
-  inputWidth: string;
-  type: string;
-}
+import { IFormInput } from "@/types/formInput";
 
-const FormInput: React.FC<IProps> = ({
+const FormInput: React.FC<IFormInput> = ({
   value,
   handleInputChange,
   label,

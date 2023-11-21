@@ -1,20 +1,9 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import css from "./button.module.css";
+import { IButton } from "@/types/button";
 
-interface IProps {
-  type?: "button" | "submit" | "reset";
-  onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
-  buttonWidth: string;
-  borderRadius: string;
-  buttonTop?: string;
-  buttonLeft?: string;
-  buttonBottom?: string;
-  buttonRight?: string;
-  children?: React.ReactNode;
-}
-
-const Button: React.FC<IProps> = ({
+const Button: React.FC<IButton> = ({
   type,
   onClick,
   buttonWidth,

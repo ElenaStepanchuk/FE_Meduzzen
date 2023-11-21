@@ -1,6 +1,10 @@
+"use client";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+
+import { Provider } from "react-redux";
+import { store } from "@/store/store";
 
 import { Header, Footer } from "@/components";
 
@@ -18,11 +22,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Header />
-        <main className="main">{children}</main>
-        <Footer />
-      </body>
+      <Provider store={store}>
+        <body className={inter.className}>
+          <Header />
+          <main className="main">{children}</main>
+          <Footer />
+        </body>
+      </Provider>
     </html>
   );
 }
