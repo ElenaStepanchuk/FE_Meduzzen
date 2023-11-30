@@ -3,7 +3,8 @@ import React from "react";
 import css from "./modalWindow.module.css";
 
 import { Button } from "..";
-import { IModalWindow } from "@/types/modalWindow";
+import { IModalWindow } from "../../types/modalWindow";
+import { AiOutlineClose } from "react-icons/ai";
 
 const ModalWindow: React.FC<IModalWindow> = ({
   closeModal,
@@ -20,12 +21,12 @@ const ModalWindow: React.FC<IModalWindow> = ({
         <Button
           onClick={closeModal}
           type={"button"}
-          buttonWidth={"33px"}
+          buttonWidth={"30px"}
           borderRadius={"50%"}
           buttonTop={"-100px"}
           buttonRight={"-50px"}
         >
-          X
+          <AiOutlineClose className={css.buttonSvg} />
         </Button>
         <div> {children}</div>
       </div>

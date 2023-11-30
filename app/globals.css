@@ -37,5 +37,5 @@ ul {
 .main {
   display: flex;
   flex-direction: column;
-  padding: 6rem;
+  padding: 1rem;
 }

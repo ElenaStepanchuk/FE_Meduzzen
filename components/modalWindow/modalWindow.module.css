@@ -24,3 +24,8 @@
   padding: 10px;
   z-index: 105;
 }
+.buttonSvg {
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+}
