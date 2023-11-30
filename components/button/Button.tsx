@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import css from "./button.module.css";
-import { IButton } from "@/types/button";
+import { IButton } from "../../types/button";
 
 const Button: React.FC<IButton> = ({
   type,
