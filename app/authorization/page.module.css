@@ -15,3 +15,49 @@
   text-align: center;
   color: rgb(26, 89, 248);
 }
+.container_password {
+  position: relative;
+}
+.show_button {
+  position: absolute;
+  bottom: 5px;
+  right: 10px;
+  padding: 0;
+  border: none;
+  background: none;
+}
+.show_icon {
+  width: 16px;
+  height: 16px;
+}
+.link {
+  display: flex;
+  color: black;
+  justify-content: center;
+}
+.link:hover {
+  transition: 0.3s;
+  color: white;
+}
+
+.text1 {
+  margin-top: 30px;
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+  color: rgb(26, 89, 248);
+}
+
+.link1 {
+  display: flex;
+  margin-top: 20px;
+  font-size: 20px;
+  font-weight: 600;
+
+  justify-content: center;
+  color: rgb(26, 89, 248);
+  text-decoration: underline;
+}
+.link1:hover {
+  color: #000000;
+}

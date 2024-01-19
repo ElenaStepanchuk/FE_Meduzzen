@@ -8,25 +8,12 @@
   text-align: center;
   color: rgb(26, 89, 248);
 }
-.text {
-  margin-top: 50px;
-  font-size: 24px;
-  font-weight: 400;
-  text-align: center;
-  color: rgb(26, 89, 248);
-}
 .user_list {
-}
-.user_item {
   display: flex;
-  justify-content: space-between;
-  font-size: 18px;
-  font-weight: 400;
-  text-align: center;
-  color: rgb(26, 89, 248);
+  margin-top: 50px;
+  margin-bottom: 50px;
+  justify-content: center;
 }
-
-.user_item__text {
-  justify-content: space-between;
-  width: 200px;
+.user_list :not(:last-child) {
+  margin-right: 20px;
 }

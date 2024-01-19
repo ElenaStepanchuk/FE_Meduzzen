@@ -5,23 +5,73 @@ import css from "./page.module.css";
 
 import { useGetAllUsersQuery } from "@/redux/api/usersApi";
 import { IUser } from "../../types/user";
+import { Loader } from "@/components";
+import defaultProfile from "../../public/defaultProfile.jpg";
+import Image from "next/image";
 
 const Users = () => {
   const { data = { detail: [] }, isLoading } = useGetAllUsersQuery("");
+  console.log("data users", data);
 
-  if (isLoading) return <h2>Loading...</h2>;
+  if (isLoading) {
+    return <Loader />;
+  }
   return (
     <div className={css.container}>
-      <h1 className={css.title}>List of users page</h1>
+      <h1 className={css.title}>All users list</h1>
       <ul className={css.user_list}>
         {data.detail.map((item: IUser) => (
-          <li className={css.user_item} key={item.id}>
-            <p className={css.user_item__text}>{item.first_name}</p>
-            <p className={css.user_item__text}>{item.last_name}</p>
-            <p className={css.user_item__text}>{item.email}</p>
+          <li key={item.id}>
+            <div
+              className="card d-flex justify-content-center"
+              style={{ width: "20rem" }}
+            >
+              <Image
+                src={item?.photo || defaultProfile}
+                height={280}
+                className="card-img-top"
+                alt="profile"
+              />
+              <div className="card-body">
+                <h5 className="card-title">
+                  first name: {item?.first_name || item?.email}
+                </h5>
+                <p className="card-text">
+                  last name: {item?.last_name || item.email}
+                </p>
+                <p className="card-text">email: {item?.email}</p>
+                <p className="card-text">{item.role}</p>
+              </div>
+            </div>
           </li>
         ))}
       </ul>
+
+      <nav className="d-flex justify-content-center" aria-label="...">
+        <ul className="pagination">
+          <li className="page-item disabled">
+            <span className="page-link">Previous</span>
+          </li>
+          <li className="page-item">
+            <a className="page-link" href="#">
+              1
+            </a>
+          </li>
+          <li className="page-item active" aria-current="page">
+            <span className="page-link">2</span>
+          </li>
+          <li className="page-item">
+            <a className="page-link" href="#">
+              3
+            </a>
+          </li>
+          <li className="page-item">
+            <a className="page-link" href="#">
+              Next
+            </a>
+          </li>
+        </ul>
+      </nav>
     </div>
   );
 };

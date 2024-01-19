@@ -1,7 +1,30 @@
 .nav_container {
-  padding: 20px;
   display: flex;
   justify-content: space-between;
+  padding: 20px;
+}
+.user_menu__container,
+.auth_menu__container {
+  display: flex;
+}
+.user_menu__container :not(last-child),
+.auth_menu__container :not(last-child) {
+  margin-left: 50px;
+}
+
+.nav_menu__container {
+  display: flex;
+}
+.nav_menu__container :not(last-child) {
+  margin-right: 50px;
+}
+
+.user_name {
+  display: flex;
+  margin: 0;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 18px;
 }
 .nav_item {
   font-weight: 600;

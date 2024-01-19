@@ -11,6 +11,9 @@ const FormInput: React.FC<IFormInput> = ({
   name,
   inputWidth,
   type,
+  pattern,
+  minLength,
+  maxLength,
 }) => {
   return (
     <div className={css.input_wrapper}>
@@ -23,6 +26,9 @@ const FormInput: React.FC<IFormInput> = ({
         required
         onChange={handleInputChange}
         style={{ width: inputWidth }}
+        pattern={pattern}
+        minLength={minLength}
+        maxLength={maxLength}
       ></input>
       <label className={css.form_label}>{label}</label>
     </div>

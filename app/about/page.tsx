@@ -16,7 +16,6 @@ const About: React.FC = () => {
 
   const { value } = useAppSelector((state) => state.testString);
   const { data = { status_code: "" } } = useGetHealthCheckApiQuery("");
-
   const handleInputChange = (event: React.FormEvent<HTMLInputElement>) => {
     dispatch(addText((event.target as HTMLInputElement).value));
   };
@@ -24,6 +23,7 @@ const About: React.FC = () => {
   const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
+
   return (
     <div>
       <div className={css.container}>

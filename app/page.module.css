@@ -9,10 +9,16 @@
   color: rgb(26, 89, 248);
 }
 
-.tittleText {
+.link {
+  display: flex;
   margin-top: 50px;
   font-size: 35px;
-  font-weight: 800;
-  text-align: center;
+  font-weight: 600;
+
+  justify-content: center;
   color: rgb(26, 89, 248);
+  text-decoration: underline;
+}
+.link:hover {
+  color: #000000;
 }

@@ -6,3 +6,4 @@ export { default as ModalWindow } from "../components/modalWindow/ModalWindow";
 export { default as Button } from "../components/button/Button";
 export { default as Form } from "../components/form/Form";
 export { default as FormInput } from "../components/formInput/FormInput";
+export { default as Loader } from "../components/loader/Loader";

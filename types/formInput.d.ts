@@ -5,4 +5,7 @@ export interface IFormInput {
   name: string;
   inputWidth: string;
   type: string;
+  pattern?: string;
+  minLength?: InputHTMLAttributes<HTMLInputElement>;
+  maxLength?: InputHTMLAttributes<HTMLInputElement>;
 }

@@ -1,59 +1,34 @@
 "use client";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { isAuthState, userState } from "@/redux/auth/authSelectors";
+
+import { logout } from "@/redux/auth/authSlice";
 
 import css from "./navList.module.css";
+import { Logout } from "@/redux/auth/authOperations";
+
+import { UserMenu } from "./userMenu";
+import { AuthMenu } from "./authMenu";
+import { NavMenu } from "./navMenu";
+import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
 
 const NavList = () => {
-  const pathname: string = usePathname();
+  const authState: boolean = useAppSelector(isAuthState);
+  const currentUser: any = useAppSelector(userState);
 
+  const dispatch = useAppDispatch();
+
+  const logoutUser = async () => {
+    await Logout();
+    dispatch(logout());
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("actionToken");
+    localStorage.setItem("isAuth", "true");
+  };
   return (
     <div className={css.nav_container}>
-      <Link className={pathname === "/" ? css.active : css.nav_item} href="/">
-        Home
-      </Link>
-      <Link
-        className={pathname === "/about" ? css.active : css.nav_item}
-        href="/about"
-      >
-        About
-      </Link>
-      <Link
-        className={pathname === "/registration" ? css.active : css.nav_item}
-        href="/registration"
-      >
-        User registration
-      </Link>
-      <Link
-        className={pathname === "/authorization" ? css.active : css.nav_item}
-        href="/authorization"
-      >
-        User authorization
-      </Link>
-      <Link
-        className={pathname === "/users" ? css.active : css.nav_item}
-        href="/users"
-      >
-        List of users
-      </Link>
-      <Link
-        className={pathname === "/profile" ? css.active : css.nav_item}
-        href="/profile"
-      >
-        User Profile
-      </Link>
-      <Link
-        className={pathname === "/companies" ? css.active : css.nav_item}
-        href="/companies"
-      >
-        List of companies
-      </Link>
-      <Link
-        className={pathname === "/company" ? css.active : css.nav_item}
-        href="/company"
-      >
-        Company Profile
-      </Link>
+      {NavMenu()}
+      {!authState ? UserMenu() : AuthMenu(logoutUser, currentUser)}
     </div>
   );
 };

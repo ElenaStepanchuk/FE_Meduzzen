@@ -1,15 +1,13 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
+
+import baseQuery from "../baseQuery/baseQuery";
 
 import { IResponse } from "../../types/response";
 import { IUser } from "../../types/user";
 
-const HOST = process.env.HOST;
-
 export const usersApi = createApi({
   reducerPath: "usersApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: HOST,
-  }),
+  baseQuery,
   endpoints: (builder) => ({
     getAllUsers: builder.query<IResponse<IUser[]>, string>({
       query: () => `users`,

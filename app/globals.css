@@ -18,9 +18,9 @@ body {
   /* background: orange; */
   background: linear-gradient(
     90deg,
-    orange 0%,
-    rgb(255, 188, 62) 50%,
-    orange 100%
+    rgb(252, 240, 218) 0%,
+    rgb(255, 201, 102) 50%,
+    rgb(252, 240, 218) 100%
   );
 }
 
