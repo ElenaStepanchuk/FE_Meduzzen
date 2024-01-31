@@ -5,5 +5,14 @@ import { usePathname } from "next/navigation";
 
 export const UserMenu = () => {
   const pathname: string = usePathname();
-  return <div className={css.user_menu__container}></div>;
+  return (
+    <div className={css.user_menu__container}>
+      <Link
+        className={pathname === "/login" ? css.active : css.nav_item}
+        href="/authorization"
+      >
+        Login
+      </Link>
+    </div>
+  );
 };

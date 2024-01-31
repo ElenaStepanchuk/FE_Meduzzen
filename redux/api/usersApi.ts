@@ -10,9 +10,19 @@ export const usersApi = createApi({
   baseQuery,
   endpoints: (builder) => ({
     getAllUsers: builder.query<IResponse<IUser[]>, string>({
-      query: () => `users`,
+      query: () => ({
+        url: `users`,
+        method: "GET",
+      }),
+    }),
+    updateUser: builder.mutation<IResponse<IUser>, any>({
+      query: ({ id, email, first_name, last_name, photo }) => ({
+        url: `users/${id}`,
+        method: "PATCH",
+        body: { email, first_name, last_name, photo },
+      }),
     }),
   }),
 });
 
-export const { useGetAllUsersQuery } = usersApi;
+export const { useGetAllUsersQuery, useUpdateUserMutation } = usersApi;

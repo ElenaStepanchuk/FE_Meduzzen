@@ -1,70 +1,78 @@
 "use client";
 import React, { useState } from "react";
-import css from "./page.module.css";
-import { Form, FormInput, Button } from "@/components";
-
-import { setUser, setToken } from "@/redux/auth/authSlice";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 import Image from "next/image";
+
+import { Form, FormInput, Button, Loader } from "@/components";
+import { setIsAuth } from "@/redux/slice/authSlice";
+import { useAppDispatch } from "@/hooks/hooks";
+import { useLoginMutation } from "@/redux/api/authApi";
 
 import showPassword from "@/public/showButton/showPasswordSvg.svg";
 import notShowPassword from "@/public/showButton/notShowPasswordSvg.svg";
-import { LoginUser } from "@/redux/auth/authOperations";
-import Link from "next/link";
-import { useAppDispatch } from "@/hooks/hooks";
+
+import css from "./page.module.css";
+
+import { ICreateUser } from "@/types/createUser";
 
 const Authorization = () => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [type, setType] = useState<string>("password");
-  const [icon, setIcon] = useState<any>(notShowPassword);
+  const router = useRouter();
   const dispatch = useAppDispatch();
+
+  const [login, { isLoading, error }] = useLoginMutation();
+  const [credentials, setCredential] = useState<ICreateUser>({
+    email: "",
+    password: "",
+  });
+  const [showPass, setShowPass] = useState<{ type: string; icon: string }>({
+    type: "password",
+    icon: notShowPassword,
+  });
 
   const handleInputChange = (event: any) => {
     event.preventDefault();
     const { value, name } = event.currentTarget;
     switch (name) {
       case "email":
-        setEmail(value);
+        setCredential({ ...credentials, email: value });
         break;
       case "password":
-        setPassword(value);
+        setCredential({ ...credentials, password: value });
         break;
       default:
         return;
     }
   };
-  const reset = () => {
-    setEmail("");
-    setPassword("");
-  };
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   const submitForm = async () => {
-    const response = await LoginUser(email, password);
-    console.log("response", response);
-    const { id, first_name, last_name, photo, role } = response.detail;
-    dispatch(setUser({ email, id, first_name, last_name, photo, role }));
-    const { accessToken, refreshToken, actionToken } = response.detail.tokens;
-    dispatch(setToken(accessToken));
-    localStorage.setItem("accessToken", accessToken);
-    localStorage.setItem("refreshToken", refreshToken);
-    localStorage.setItem("actionToken", actionToken);
-    localStorage.setItem("isAuth", "true");
-    reset();
-    return response;
+    await login(credentials);
+    dispatch(setIsAuth(true));
+    router.push("/profile");
+    setCredential({ email: "", password: "" });
+  };
+
+  const submitFormAuth0 = async () => {
+    dispatch(setIsAuth(true));
+    router.push("/subscriber");
   };
 
   const Show = () => {
+    const { type } = showPass;
     if (type === "password") {
-      setType("text");
-      setIcon(showPassword);
+      setShowPass({ type: "text", icon: showPassword });
     } else {
-      setType("password");
-      setIcon(notShowPassword);
+      setShowPass({ type: "password", icon: notShowPassword });
     }
   };
 
   return (
     <div className={css.container}>
+      <h1 className={css.title}>Login form</h1>
       <Form
         formMargin={"50px auto"}
         submitForm={submitForm}
@@ -72,23 +80,28 @@ const Authorization = () => {
       >
         <FormInput
           label={"Your email"}
-          value={email}
+          value={credentials.email}
           name={"email"}
           handleInputChange={handleInputChange}
           type={"text"}
+          pattern="/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/"
           inputWidth={"390px"}
         />
         <div className={css.container_password}>
           <FormInput
             label={"Your password"}
-            value={password}
+            value={credentials.password}
             name={"password"}
             handleInputChange={handleInputChange}
-            type={type}
+            type={showPass.type}
             inputWidth={"390px"}
           ></FormInput>
           <button className={css.show_button} type="button" onClick={Show}>
-            <Image className={css.show_icon} src={icon} alt="show password" />
+            <Image
+              className={css.show_icon}
+              src={showPass.icon}
+              alt="show password"
+            />
           </button>
         </div>
         <Button
@@ -103,7 +116,7 @@ const Authorization = () => {
         </Button>
       </Form>
       <Button
-        onClick={submitForm}
+        onClick={submitFormAuth0}
         type={"button"}
         buttonWidth={"80px"}
         borderRadius={"20px"}

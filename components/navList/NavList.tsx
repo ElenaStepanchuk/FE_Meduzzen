@@ -1,34 +1,26 @@
 "use client";
-import { isAuthState, userState } from "@/redux/auth/authSelectors";
-
-import { logout } from "@/redux/auth/authSlice";
-
 import css from "./navList.module.css";
-import { Logout } from "@/redux/auth/authOperations";
 
-import { UserMenu } from "./userMenu";
 import { AuthMenu } from "./authMenu";
 import { NavMenu } from "./navMenu";
-import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
+
+import { UserMenu } from "./userMenu";
+import { GetFromLocalstorageStatus } from "@/utils/getFromLocalstorage.util";
+import { useEffect } from "react";
+import { useAppSelector } from "@/hooks/hooks";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 const NavList = () => {
-  const authState: boolean = useAppSelector(isAuthState);
-  const currentUser: any = useAppSelector(userState);
+  const isAuthLocal = GetFromLocalstorageStatus("isAuth");
+  const { isAuth } = useAppSelector((state) => state.auth);
+  const { user } = useUser();
 
-  const dispatch = useAppDispatch();
+  useEffect(() => {}, [isAuth, isAuthLocal, user]);
 
-  const logoutUser = async () => {
-    await Logout();
-    dispatch(logout());
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
-    localStorage.removeItem("actionToken");
-    localStorage.setItem("isAuth", "true");
-  };
   return (
     <div className={css.nav_container}>
-      {NavMenu()}
-      {!authState ? UserMenu() : AuthMenu(logoutUser, currentUser)}
+      <NavMenu />
+      {isAuth || isAuthLocal || user ? <AuthMenu /> : <UserMenu />}
     </div>
   );
 };

@@ -1,10 +1,12 @@
 "use client";
 import React, { useState } from "react";
+
 import { Button, ModalWindow } from "@/components";
-import css from "./page.module.css";
 import { addText } from "@/redux/testString/testStringSlice";
 import { useAppSelector, useAppDispatch } from "@/hooks/hooks";
 import { useGetHealthCheckApiQuery } from "@/redux/api/healthCheckApi";
+
+import css from "./page.module.css";
 
 const About: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);

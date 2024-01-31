@@ -8,8 +8,11 @@ export const companyApi = createApi({
   reducerPath: "companyApi",
   baseQuery,
   endpoints: (builder) => ({
-    getCompany: builder.query<IResponse<ICompany>, string>({
-      query: () => `companies/:id`,
+    getCompany: builder.query<IResponse<ICompany>, IResponse<ICompany> | null>({
+      query: () => ({
+        url: `companies/:id`,
+        method: "GET",
+      }),
     }),
   }),
 });

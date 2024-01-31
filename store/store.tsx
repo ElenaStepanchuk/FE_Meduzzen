@@ -5,10 +5,10 @@ import { testStringSlice } from "@/redux/testString/testStringSlice";
 import { usersApi } from "../redux/api/usersApi";
 import { healthCheckApi } from "../redux/api/healthCheckApi";
 import { authApi } from "@/redux/api/authApi";
-import authReducer from "@/redux/auth/authSlice";
 
 import { companiesApi } from "@/redux/api/companiesApi";
 import { companyApi } from "@/redux/api/companyApi";
+import { authSlice } from "@/redux/slice/authSlice";
 
 export const store = configureStore({
   reducer: {
@@ -18,7 +18,7 @@ export const store = configureStore({
     [healthCheckApi.reducerPath]: healthCheckApi.reducer,
     [companiesApi.reducerPath]: companiesApi.reducer,
     [companyApi.reducerPath]: companyApi.reducer,
-    auth: authReducer,
+    auth: authSlice.reducer,
   },
   middleware: (getDefaultMiddlware) =>
     getDefaultMiddlware().concat(

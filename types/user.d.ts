@@ -6,6 +6,7 @@ export interface IUser {
   password?: string;
   createdAt?: Date;
   updatedAt?: Date;
-  photo?: string;
+  photo?: string | null;
   role?: "user" | "administrator" | "owner" | null;
+  tokens: { accessToken: string; refreshToken: string; actionToken: string };
 }

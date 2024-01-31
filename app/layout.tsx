@@ -1,9 +1,10 @@
 "use client";
-import { Inter } from "next/font/google";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
-import "bootstrap/dist/css/bootstrap.css";
 
 import "./globals.css";
+import "bootstrap/dist/css/bootstrap.css";
+
+import { Inter } from "next/font/google";
 
 import { Provider } from "react-redux";
 import { store } from "@/store/store";
@@ -17,7 +18,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // const accessToken = localStorage.getItem("accessToken");
   return (
     <html lang="en">
       <UserProvider>

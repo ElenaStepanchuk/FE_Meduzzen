@@ -1,57 +1,67 @@
 "use client";
 import React, { useState } from "react";
-import css from "./page.module.css";
-import { Form, FormInput, Button } from "@/components";
-
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 import Image from "next/image";
+
+import { Form, FormInput, Button, Loader } from "@/components";
 
 import showPassword from "@/public/showButton/showPasswordSvg.svg";
 import notShowPassword from "@/public/showButton/notShowPasswordSvg.svg";
-import { RegistrationUser } from "@/redux/auth/authOperations";
-import Link from "next/link";
+
+import css from "./page.module.css";
+import { useRegisterMutation } from "@/redux/api/authApi";
+
+import { ICreateUser } from "@/types/createUser";
 
 const Registration = () => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [type, setType] = useState<string>("password");
-  const [icon, setIcon] = useState<any>(notShowPassword);
+  const router = useRouter();
+  const [register, { isLoading }] = useRegisterMutation();
+  const [credentials, setCredential] = useState<ICreateUser>({
+    email: "",
+    password: "",
+  });
+  const [showPass, setShowPass] = useState<{ type: string; icon: string }>({
+    type: "password",
+    icon: notShowPassword,
+  });
 
   const handleInputChange = (event: any) => {
     event.preventDefault();
     const { value, name } = event.currentTarget;
     switch (name) {
       case "email":
-        setEmail(value);
+        setCredential({ ...credentials, email: value });
         break;
       case "password":
-        setPassword(value);
+        setCredential({ ...credentials, password: value });
         break;
       default:
         return;
     }
   };
-  const reset = () => {
-    setEmail("");
-    setPassword("");
-  };
+
+  if (isLoading) {
+    return <Loader />;
+  }
   const submitForm = async () => {
-    const response = await RegistrationUser(email, password);
-    reset();
-    return response;
+    await register(credentials);
+    router.push("/authorization");
+    setCredential({ email: "", password: "" });
   };
 
   const Show = () => {
+    const { type } = showPass;
     if (type === "password") {
-      setType("text");
-      setIcon(showPassword);
+      setShowPass({ type: "text", icon: showPassword });
     } else {
-      setType("password");
-      setIcon(notShowPassword);
+      setShowPass({ type: "password", icon: notShowPassword });
     }
   };
 
   return (
     <div className={css.container}>
+      <h1 className={css.title}>Registration form</h1>
       <Form
         formMargin={"50px auto"}
         submitForm={submitForm}
@@ -59,7 +69,7 @@ const Registration = () => {
       >
         <FormInput
           label={"Your email"}
-          value={email}
+          value={credentials.email}
           name={"email"}
           handleInputChange={handleInputChange}
           type="email"
@@ -71,16 +81,20 @@ const Registration = () => {
         <div className={css.container_password}>
           <FormInput
             label={"Your password"}
-            value={password}
+            value={credentials.password}
             name={"password"}
             handleInputChange={handleInputChange}
-            type={type}
+            type={showPass.type}
             inputWidth={"390px"}
             minLength="8"
             maxLength="10"
           ></FormInput>
           <button className={css.show_button} type="button" onClick={Show}>
-            <Image className={css.show_icon} src={icon} alt="show password" />
+            <Image
+              className={css.show_icon}
+              src={showPass.icon}
+              alt="show password"
+            />
           </button>
         </div>
         <Button

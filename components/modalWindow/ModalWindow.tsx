@@ -21,7 +21,7 @@ const ModalWindow: React.FC<IModalWindow> = ({
         <Button
           onClick={closeModal}
           type={"button"}
-          buttonWidth={"30px"}
+          buttonWidth={"35px"}
           borderRadius={"50%"}
           buttonTop={"-100px"}
           buttonRight={"-50px"}
