@@ -8,4 +8,6 @@ export interface IButton {
   buttonBottom?: string;
   buttonRight?: string;
   children?: React.ReactNode;
+  key?: string;
+  id?: string;
 }

@@ -13,7 +13,6 @@ import { IUser } from "../../types/user";
 
 const Users = () => {
   const { data = { detail: [] }, isLoading, error } = useGetAllUsersQuery("");
-  console.log("users data", data);
 
   const { user } = useUser();
 
@@ -31,11 +30,12 @@ const Users = () => {
           <li key={item.id} style={{ marginRight: "20px" }}>
             <div
               className="card d-flex justify-content-center list-group-item-action"
-              style={{ width: "20rem" }}
+              style={{ width: "20rem", height: "32rem" }}
             >
               <Image
                 src={item?.photo || defaultProfile}
                 height={280}
+                style={{ width: "auto" }}
                 className="card-img-top"
                 alt="profile"
               />

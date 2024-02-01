@@ -11,16 +11,12 @@ const Company = () => {
   const { data, isLoading, error } = useGetCompanyQuery(null);
   const { user } = useUser();
 
-  console.log("data company", data);
-
   if (isLoading) {
     return <Loader />;
   }
   if (!user && error && "status" in error && error.status === 401) {
     throw new Error("Unauthorized");
   }
-  console.log("ErrComp", error);
-
   return (
     <div className={css.container}>
       <h1 className={css.title}>Company profile</h1>

@@ -7,10 +7,10 @@ import { IModalWindow } from "../../types/modalWindow";
 import { AiOutlineClose } from "react-icons/ai";
 
 const ModalWindow: React.FC<IModalWindow> = ({
-  closeModal,
   modalWidth,
   textAlign,
   children,
+  closeModal,
 }) => {
   return (
     <div className={css.wrapper}>

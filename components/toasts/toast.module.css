@@ -1,0 +1,41 @@
+.container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgb(26, 89, 248, 0.5);
+}
+.container_notification {
+  padding: 10px;
+  width: 30%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  z-index: 106;
+  position: absolute;
+  top: 160px;
+  left: 35%;
+  background: linear-gradient(
+    90deg,
+    rgb(26, 89, 248) 0%,
+    rgb(126, 163, 255) 50%,
+    rgb(26, 89, 248) 100%
+  );
+  border: 2px solid rgb(26, 89, 248);
+  box-shadow: 0 3px 7px rgb(0 0 0 / 30%);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.text_message {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  text-align: center;
+  font-size: 400;
+  font-weight: 600;
+  color: #000000;
+}

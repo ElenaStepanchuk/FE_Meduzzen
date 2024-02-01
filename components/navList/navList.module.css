@@ -32,6 +32,7 @@
   text-transform: uppercase;
   text-align: center;
   color: #000000;
+  text-decoration: none;
 }
 .nav_item:hover {
   transition: 0.3s;
@@ -43,13 +44,16 @@
   text-transform: uppercase;
   text-align: center;
   color: #ffffff;
+  text-decoration: none;
 }
 .link_auth0 {
   display: flex;
   color: black;
   justify-content: center;
+  text-decoration: none;
 }
 .link_auth0:hover {
   transition: 0.3s;
   color: white;
+  text-decoration: none;
 }

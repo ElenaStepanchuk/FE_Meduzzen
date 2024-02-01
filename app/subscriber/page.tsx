@@ -61,6 +61,7 @@ const Subscriber = () => {
             src={user.picture || defaultProfile}
             height={280}
             width={280}
+            style={{ width: "auto" }}
             className="card-img-top"
             alt="profile"
           />

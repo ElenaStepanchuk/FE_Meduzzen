@@ -4,10 +4,11 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 
-import { Form, FormInput, Button, Loader } from "@/components";
+import { Form, FormInput, Button, Loader, Toast } from "@/components";
 import { setIsAuth } from "@/redux/slice/authSlice";
 import { useAppDispatch } from "@/hooks/hooks";
 import { useLoginMutation } from "@/redux/api/authApi";
+import ValidationEmail from "@/utils/validationEmail.util";
 
 import showPassword from "@/public/showButton/showPasswordSvg.svg";
 import notShowPassword from "@/public/showButton/notShowPasswordSvg.svg";
@@ -25,9 +26,14 @@ const Authorization = () => {
     email: "",
     password: "",
   });
-  const [showPass, setShowPass] = useState<{ type: string; icon: string }>({
+  const [show, setShow] = useState<{
+    type: string;
+    icon: string;
+    showNotificationEmail: boolean;
+  }>({
     type: "password",
     icon: notShowPassword,
+    showNotificationEmail: false,
   });
 
   const handleInputChange = (event: any) => {
@@ -50,6 +56,12 @@ const Authorization = () => {
   }
 
   const submitForm = async () => {
+    const validationEmail = ValidationEmail(credentials.email);
+    if (validationEmail !== "good") {
+      setShow({ ...show, showNotificationEmail: true });
+      return;
+    }
+
     await login(credentials);
     dispatch(setIsAuth(true));
     router.push("/profile");
@@ -62,12 +74,27 @@ const Authorization = () => {
   };
 
   const Show = () => {
-    const { type } = showPass;
+    const { type } = show;
     if (type === "password") {
-      setShowPass({ type: "text", icon: showPassword });
+      setShow({
+        ...show,
+        type: "text",
+        icon: showPassword,
+      });
     } else {
-      setShowPass({ type: "password", icon: notShowPassword });
+      setShow({
+        ...show,
+        type: "password",
+        icon: notShowPassword,
+      });
     }
+  };
+
+  const closeNotification = () => {
+    setShow({
+      ...show,
+      showNotificationEmail: false,
+    });
   };
 
   return (
@@ -93,13 +120,13 @@ const Authorization = () => {
             value={credentials.password}
             name={"password"}
             handleInputChange={handleInputChange}
-            type={showPass.type}
+            type={show.type}
             inputWidth={"390px"}
           ></FormInput>
           <button className={css.show_button} type="button" onClick={Show}>
             <Image
               className={css.show_icon}
-              src={showPass.icon}
+              src={show.icon}
               alt="show password"
             />
           </button>
@@ -133,6 +160,14 @@ const Authorization = () => {
       <Link className={css.link1} href="/registration">
         registration in app
       </Link>
+      {show.showNotificationEmail && (
+        <Toast
+          message={"Add correct email!"}
+          buttonSelect={["ok"]}
+          handleClick={closeNotification}
+          height={"10%"}
+        />
+      )}
     </div>
   );
 };

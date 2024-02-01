@@ -9,6 +9,7 @@ import { authApi } from "@/redux/api/authApi";
 import { companiesApi } from "@/redux/api/companiesApi";
 import { companyApi } from "@/redux/api/companyApi";
 import { authSlice } from "@/redux/slice/authSlice";
+import { modalSlice } from "@/redux/slice/modalSlice";
 
 export const store = configureStore({
   reducer: {
@@ -19,6 +20,7 @@ export const store = configureStore({
     [companiesApi.reducerPath]: companiesApi.reducer,
     [companyApi.reducerPath]: companyApi.reducer,
     auth: authSlice.reducer,
+    modal: modalSlice.reducer,
   },
   middleware: (getDefaultMiddlware) =>
     getDefaultMiddlware().concat(

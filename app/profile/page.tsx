@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 import { Button, Form, FormInput, Loader, ModalWindow } from "@/components";
+
 import { useGetProfileQuery } from "@/redux/api/authApi";
 import { useUpdateUserMutation } from "@/redux/api/usersApi";
 import { useUser } from "@auth0/nextjs-auth0/client";
@@ -26,16 +27,21 @@ const Profile = () => {
     first_name: string;
     last_name: string;
   }>({
-    first_name: `${data?.detail?.first_name || data?.detail?.email}`,
-    last_name: `${data?.detail?.last_name || data?.detail?.email}`,
+    first_name: "",
+    last_name: "",
   });
 
-  const onClick = (e: React.MouseEvent) => {
+  const onClick = () => {
     setIsModalOpen((isOpen) => !isOpen);
+    setCredential({
+      first_name: `${data?.detail?.first_name || data?.detail?.email}`,
+      last_name: `${data?.detail?.last_name || data?.detail?.email}`,
+    });
   };
 
   const handleClick = (event: any) => {
     event.preventDefault();
+
     const { value, name } = event.currentTarget;
     switch (name) {
       case "first_name":
@@ -51,8 +57,13 @@ const Profile = () => {
 
   const submitForm = async (e: any) => {
     e.preventDefault();
-    await updateUser({ ...data });
+    const userId = data?.detail.id;
 
+    await updateUser({
+      id: userId,
+      first_name: credentials.first_name,
+      last_name: credentials.last_name,
+    });
     router.push("/profile");
     setCredential({ first_name: "", last_name: "" });
     setIsModalOpen((isOpen) => !isOpen);
@@ -74,7 +85,7 @@ const Profile = () => {
           <Image
             src={data?.detail?.photo || defaultProfile}
             height={280}
-            width={280}
+            style={{ width: "auto" }}
             className="card-img-top"
             alt="profile"
           />

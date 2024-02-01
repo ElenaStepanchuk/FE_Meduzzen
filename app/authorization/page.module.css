@@ -27,17 +27,19 @@
   background: none;
 }
 .show_icon {
-  width: 16px;
+  width: auto;
   height: 16px;
 }
 .link {
   display: flex;
   color: black;
   justify-content: center;
+  text-decoration: none;
 }
 .link:hover {
   transition: 0.3s;
   color: white;
+  text-decoration: none;
 }
 
 .text1 {
