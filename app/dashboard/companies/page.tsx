@@ -36,7 +36,6 @@ const Companies = () => {
     localStorage.removeItem("currentUser");
     dispatch(setIsAuth(false));
     router.push("/authorization");
-    console.log("error?.status", error?.status);
   }
 
   const onClick = (e: React.MouseEvent) => {};

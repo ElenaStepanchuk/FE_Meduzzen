@@ -85,7 +85,6 @@ const Profile = () => {
     localStorage.removeItem("currentUser");
     dispatch(setIsAuth(false));
     router.push("/authorization");
-    console.log("error?.status", error?.status);
   }
 
   return (
