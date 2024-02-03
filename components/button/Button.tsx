@@ -13,7 +13,6 @@ const Button: React.FC<IButton> = ({
   buttonLeft,
   buttonRight,
   buttonBottom,
-  key,
   id,
 }) => {
   return (
@@ -22,7 +21,6 @@ const Button: React.FC<IButton> = ({
         type={type}
         onClick={onClick}
         className={css.button}
-        key={key}
         id={id}
         style={{
           width: buttonWidth,

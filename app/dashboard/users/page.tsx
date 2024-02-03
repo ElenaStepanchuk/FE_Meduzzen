@@ -1,17 +1,23 @@
 "use client";
 import React from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 import { Loader } from "@/components";
+import { setIsAuth } from "@/redux/slice/authSlice";
+import { useAppDispatch } from "@/hooks/hooks";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useGetAllUsersQuery } from "@/redux/api/usersApi";
 
 import css from "./page.module.css";
-import defaultProfile from "../../public/defaultProfile.jpg";
+import defaultProfile from "../../../public/defaultProfile.jpg";
 
-import { IUser } from "../../types/user";
+import { IUser } from "../../../types/user";
 
 const Users = () => {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+
   const { data = { detail: [] }, isLoading, error } = useGetAllUsersQuery("");
 
   const { user } = useUser();
@@ -19,9 +25,18 @@ const Users = () => {
   if (isLoading) {
     return <Loader />;
   }
-  if (!user && error && "status" in error && error.status === 401) {
-    throw new Error("Unauthorized");
+
+  if (!user && error && "status" in error && error?.status === 401) {
+    localStorage.removeItem("isAuth");
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("actionToken");
+    localStorage.removeItem("currentUser");
+    dispatch(setIsAuth(false));
+    router.push("/authorization");
+    console.log("error?.status", error?.status);
   }
+
   return (
     <div className={css.container}>
       <h1 className={css.title}>All users list</h1>

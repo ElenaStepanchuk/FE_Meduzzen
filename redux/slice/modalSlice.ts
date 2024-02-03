@@ -5,9 +5,13 @@ interface IModalState {
   isOpen: boolean;
 }
 
-const initialState: IModalState = {
-  isOpen: false,
-};
+const stateLocalStorage = localStorage.getItem("isOpen");
+
+const initialState: IModalState = stateLocalStorage
+  ? { isOpen: JSON.parse(stateLocalStorage) }
+  : {
+      isOpen: false,
+    };
 
 export const modalSlice = createSlice({
   name: "modal",

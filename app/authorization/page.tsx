@@ -30,10 +30,12 @@ const Authorization = () => {
     type: string;
     icon: string;
     showNotificationEmail: boolean;
+    showNotificationPassword: boolean;
   }>({
     type: "password",
     icon: notShowPassword,
     showNotificationEmail: false,
+    showNotificationPassword: false,
   });
 
   const handleInputChange = (event: any) => {
@@ -62,15 +64,25 @@ const Authorization = () => {
       return;
     }
 
-    await login(credentials);
+    if (credentials.password === "") {
+      setShow({ ...show, showNotificationPassword: true });
+      return;
+    }
+
+    const auth: any = await login(credentials);
+    if (auth?.error?.status === 400) {
+      setShow({ ...show, showNotificationPassword: true });
+      return;
+    }
+
     dispatch(setIsAuth(true));
-    router.push("/profile");
+    router.push("/dashboard/profile");
     setCredential({ email: "", password: "" });
   };
 
   const submitFormAuth0 = async () => {
     dispatch(setIsAuth(true));
-    router.push("/subscriber");
+    router.push("/dashboard/subscriber");
   };
 
   const Show = () => {
@@ -94,6 +106,7 @@ const Authorization = () => {
     setShow({
       ...show,
       showNotificationEmail: false,
+      showNotificationPassword: false,
     });
   };
 
@@ -122,6 +135,8 @@ const Authorization = () => {
             handleInputChange={handleInputChange}
             type={show.type}
             inputWidth={"390px"}
+            minLength="6"
+            maxLength="10"
           ></FormInput>
           <button className={css.show_button} type="button" onClick={Show}>
             <Image
@@ -163,6 +178,14 @@ const Authorization = () => {
       {show.showNotificationEmail && (
         <Toast
           message={"Add correct email!"}
+          buttonSelect={["ok"]}
+          handleClick={closeNotification}
+          height={"10%"}
+        />
+      )}
+      {show.showNotificationPassword && (
+        <Toast
+          message={"Password or email not valid!"}
           buttonSelect={["ok"]}
           handleClick={closeNotification}
           height={"10%"}

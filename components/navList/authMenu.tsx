@@ -37,15 +37,19 @@ export const AuthMenu = () => {
     <>
       <div className={css.auth_menu__container}>
         <Link
-          className={pathname === "/users" ? css.active : css.nav_item}
-          href="/users"
+          className={
+            pathname === "/dashboard/users" ? css.active : css.nav_item
+          }
+          href="/dashboard/users"
         >
           Users
         </Link>
         {!user ? (
           <Link
-            className={pathname === "/profile" ? css.active : css.nav_item}
-            href="/profile"
+            className={
+              pathname === "/dashboard/profile" ? css.active : css.nav_item
+            }
+            href="/dashboard/profile"
           >
             Profile
           </Link>
@@ -54,7 +58,7 @@ export const AuthMenu = () => {
             className={
               pathname === "/dashboard/subscriber" ? css.active : css.nav_item
             }
-            href="/subscriber"
+            href="/dashboard/subscriber"
           >
             Profile
           </Link>
@@ -63,13 +67,15 @@ export const AuthMenu = () => {
           className={
             pathname === "/dashboard/companies" ? css.active : css.nav_item
           }
-          href="/companies"
+          href="/dashboard/companies"
         >
           Companies
         </Link>
         <Link
-          className={pathname === "/company" ? css.active : css.nav_item}
-          href="/company"
+          className={
+            pathname === "/dashboard/company" ? css.active : css.nav_item
+          }
+          href="/dashboard/company"
         >
           Company
         </Link>

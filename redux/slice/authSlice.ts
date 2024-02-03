@@ -5,9 +5,13 @@ interface IAuthState {
   isAuth: boolean;
 }
 
-const initialState: IAuthState = {
-  isAuth: false,
-};
+const stateLocalStorage = localStorage.getItem("isAuth");
+
+const initialState: IAuthState = stateLocalStorage
+  ? { isAuth: JSON.parse(stateLocalStorage) }
+  : {
+      isAuth: false,
+    };
 
 export const authSlice = createSlice({
   name: "auth",

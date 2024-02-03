@@ -4,32 +4,47 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 import { Button, Form, FormInput, Loader, ModalWindow } from "@/components";
-import { useUser } from "@auth0/nextjs-auth0/client";
+import { setIsAuth } from "@/redux/slice/authSlice";
+import { setIsModal } from "@/redux/slice/modalSlice";
+import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
+import { useGetProfileQuery } from "@/redux/api/authApi";
 import { useUpdateUserMutation } from "@/redux/api/usersApi";
+import { useUser } from "@auth0/nextjs-auth0/client";
+
+import { GetFromLocalstorageToken } from "@/utils/getFromLocalstorage.util";
 
 import css from "./page.module.css";
-import defaultProfile from "../../public/defaultProfile.jpg";
+import defaultProfile from "../../../public/defaultProfile.jpg";
 
-const Subscriber = () => {
+const Profile = () => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
+  const token = GetFromLocalstorageToken("accessToken");
   const { user } = useUser();
+
+  const { data, isLoading, error } = useGetProfileQuery(token);
   const [updateUser] = useUpdateUserMutation();
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const { isOpen } = useAppSelector((state) => state.modal);
 
   const [credentials, setCredential] = useState<{
     first_name: string;
     last_name: string;
   }>({
-    first_name: `${user?.nickname || user?.email}`,
-    last_name: `${user?.name || user?.email}`,
+    first_name: "",
+    last_name: "",
   });
 
-  const onClick = (e: React.MouseEvent) => {
-    setIsModalOpen((isOpen) => !isOpen);
+  const onClick = () => {
+    dispatch(setIsModal(true));
+    setCredential({
+      first_name: `${data?.detail?.first_name || data?.detail?.email}`,
+      last_name: `${data?.detail?.last_name || data?.detail?.email}`,
+    });
   };
 
   const handleClick = (event: any) => {
     event.preventDefault();
+
     const { value, name } = event.currentTarget;
     switch (name) {
       case "first_name":
@@ -45,22 +60,42 @@ const Subscriber = () => {
 
   const submitForm = async (e: any) => {
     e.preventDefault();
-    await updateUser({ ...credentials });
+    const userId = data?.detail.id;
 
-    router.push("/profile");
+    await updateUser({
+      id: userId,
+      first_name: credentials.first_name,
+      last_name: credentials.last_name,
+    });
+    router.push("/dashboard/profile");
     setCredential({ first_name: "", last_name: "" });
-    setIsModalOpen((isOpen) => !isOpen);
+    dispatch(setIsModal(false));
+    window.location.reload();
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (!user && error && "status" in error && error?.status === 401) {
+    localStorage.removeItem("isAuth");
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("actionToken");
+    localStorage.removeItem("currentUser");
+    dispatch(setIsAuth(false));
+    router.push("/authorization");
+    console.log("error?.status", error?.status);
+  }
 
   return (
     <div className={css.container}>
       <h1 className={css.title}>Your profile</h1>
-      {user && (
+      {data && (
         <div className="card" style={{ width: "20rem", height: "32rem" }}>
           <Image
-            src={user.picture || defaultProfile}
+            src={data?.detail?.photo || defaultProfile}
             height={280}
-            width={280}
             style={{ width: "auto" }}
             className="card-img-top"
             alt="profile"
@@ -68,16 +103,18 @@ const Subscriber = () => {
 
           <div className="card-body">
             <h5 className="card-title">
-              first name : {user.nickname || user.email}
+              first name : {data?.detail?.first_name || data?.detail?.email}
             </h5>
 
             <p className="card-text">
-              last name : {user.nickname || user.email}
+              last name : {data?.detail?.last_name || data?.detail?.email}
             </p>
 
-            <p className="card-text">email : {user.email}</p>
+            <p className="card-text">email : {data?.detail?.email}</p>
 
-            <p className="card-text">role : {"you didh`t have role."}</p>
+            <p className="card-text">
+              role : {data?.detail?.role || "you didh`t have role."}
+            </p>
 
             <Button
               onClick={onClick}
@@ -92,7 +129,8 @@ const Subscriber = () => {
           </div>
         </div>
       )}
-      {isModalOpen && (
+
+      {isOpen && (
         <ModalWindow
           closeModal={onClick}
           modalWidth={"412px"}
@@ -136,4 +174,4 @@ const Subscriber = () => {
     </div>
   );
 };
-export default Subscriber;
+export default Profile;
