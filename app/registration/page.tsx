@@ -51,22 +51,22 @@ const Registration = () => {
   const handleInputChange = (event: any) => {
     event.preventDefault();
     const { value, name } = event.currentTarget;
-    const validate = ValidationPassword(credentials.password);
-    const { currentColor2, currentColor3, currentColor, currentMessage } =
-      validate;
-    setValidatePass({
-      ...validatePass,
-      color01: currentColor,
-      color02: currentColor2,
-      color03: currentColor3,
-      message: currentMessage,
-    });
     switch (name) {
       case "email":
         setCredential({ ...credentials, email: value });
         break;
       case "password":
         setCredential({ ...credentials, password: value });
+        const validate = ValidationPassword(value);
+        const { currentColor, currentColor2, currentColor3, currentMessage } =
+          validate;
+        setValidatePass({
+          ...validatePass,
+          color01: currentColor,
+          color02: currentColor2,
+          color03: currentColor3,
+          message: currentMessage,
+        });
         break;
       default:
         return;

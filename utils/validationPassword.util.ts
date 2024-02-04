@@ -39,7 +39,7 @@ const ValidationPassword = (pass: string) => {
     currentMessage =
       "The password must contain between 6 and 10 characters, one number and one special character!";
   }
-  return { currentColor2, currentColor3, currentColor, currentMessage };
+  return { currentColor, currentColor2, currentColor3, currentMessage };
 };
 
 export default ValidationPassword;
