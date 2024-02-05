@@ -1,9 +1,10 @@
 "use client";
 import React from "react";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 import { Loader } from "@/components";
+
 import { setIsAuth } from "@/redux/slice/authSlice";
 import { useAppDispatch } from "@/hooks/hooks";
 import { useUser } from "@auth0/nextjs-auth0/client";
@@ -17,7 +18,6 @@ import { IUser } from "../../../types/user";
 const Users = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-
   const { data = { detail: [] }, isLoading, error } = useGetAllUsersQuery("");
 
   const { user } = useUser();
@@ -26,7 +26,7 @@ const Users = () => {
     return <Loader />;
   }
 
-  if (!user && error && "status" in error && error?.status === 401) {
+  if (!user || data.detail.length === 0) {
     localStorage.removeItem("isAuth");
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");

@@ -4,8 +4,9 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 import { Button, Form, FormInput, Loader, ModalWindow } from "@/components";
-import { setIsAuth } from "@/redux/slice/authSlice";
 import { setIsModal } from "@/redux/slice/modalSlice";
+
+import { setIsAuth } from "@/redux/slice/authSlice";
 import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
 import { useGetProfileQuery } from "@/redux/api/authApi";
 import { useUpdateUserMutation } from "@/redux/api/usersApi";
@@ -77,7 +78,7 @@ const Profile = () => {
     return <Loader />;
   }
 
-  if (!user && error && "status" in error && error?.status === 401) {
+  if (!user || !data) {
     localStorage.removeItem("isAuth");
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");

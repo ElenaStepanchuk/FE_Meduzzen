@@ -3,9 +3,10 @@ import React from "react";
 import { useRouter } from "next/navigation";
 
 import { Button, Loader } from "@/components";
+import { useGetAllCompaniesQuery } from "@/redux/api/companiesApi";
+
 import { setIsAuth } from "@/redux/slice/authSlice";
 import { useAppDispatch } from "@/hooks/hooks";
-import { useGetAllCompaniesQuery } from "@/redux/api/companiesApi";
 import { useUser } from "@auth0/nextjs-auth0/client";
 
 import css from "./page.module.css";
@@ -15,12 +16,13 @@ import { ICompany } from "@/types/company";
 const Companies = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-
   const {
     data = { detail: [] },
     isLoading,
     error,
   } = useGetAllCompaniesQuery("");
+
+  console.log("ERRR", data);
 
   const { user } = useUser();
 
@@ -28,7 +30,7 @@ const Companies = () => {
     return <Loader />;
   }
 
-  if (!user && error && "status" in error && error?.status === 401) {
+  if (!user || data.detail.length === 0) {
     localStorage.removeItem("isAuth");
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");

@@ -1,8 +1,13 @@
 "use client";
 import RefreshTokens from "@/utils/refreshTokens.util";
+import { useEffect } from "react";
 
-const Error = ({ error, reset }: { error: Error; reset: () => void }) => {
-  return RefreshTokens();
-};
-
-export default Error;
+export default function Error({
+  error,
+  reset,
+}: {
+  error: Error & { digest?: string };
+  reset: () => void;
+}) {
+  RefreshTokens();
+}

@@ -20,7 +20,6 @@ export const refreshQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
   prepareHeaders: (headers) => {
     const token = localStorage.getItem("refreshToken");
-
     if (token) {
       headers.set("Authorization", `Bearer ${token}`);
     }
